@@ -1,4 +1,5 @@
 require 'tty-prompt'
+require 'pg'
 
 puts 'Welcome to Libra!'
 
@@ -17,3 +18,8 @@ options = [
 selected_option = options.index(prompt.select('What would you like to do?', options))
 
 puts "Selected option #{selected_option}"
+
+# note: the date string format used here is date %m-%d-%Y %H:%M:%S %Z
+
+conn = PG.connect( dbname: 'postgres', user: 'postgres', password: 'postgres' )
+p conn.exec('select books from users where id = 1').values[0][0][1..-2].split(',')

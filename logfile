@@ -1,0 +1,34 @@
+2025-03-12 19:59:16.536 UTC [22052] LOG:  starting PostgreSQL 12.22 (Ubuntu 12.22-0ubuntu0.20.04.2) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0, 64-bit
+2025-03-12 19:59:16.537 UTC [22052] LOG:  could not bind IPv6 address "::1": Address already in use
+2025-03-12 19:59:16.537 UTC [22052] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2025-03-12 19:59:16.537 UTC [22052] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2025-03-12 19:59:16.537 UTC [22052] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2025-03-12 19:59:16.537 UTC [22052] WARNING:  could not create listen socket for "localhost"
+2025-03-12 19:59:16.537 UTC [22052] FATAL:  could not create any TCP/IP sockets
+2025-03-12 19:59:16.537 UTC [22052] LOG:  database system is shut down
+2025-03-12 20:01:58.121 UTC [23494] LOG:  starting PostgreSQL 12.22 (Ubuntu 12.22-0ubuntu0.20.04.2) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0, 64-bit
+2025-03-12 20:01:58.122 UTC [23494] LOG:  listening on IPv6 address "::1", port 5432
+2025-03-12 20:01:58.122 UTC [23494] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2025-03-12 20:01:58.124 UTC [23494] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2025-03-12 20:01:58.137 UTC [23495] LOG:  database system was shut down at 2025-03-12 19:47:47 UTC
+2025-03-12 20:01:58.143 UTC [23494] LOG:  database system is ready to accept connections
+2025-03-12 20:03:23.962 UTC [24244] FATAL:  role "codespace" does not exist
+2025-03-12 20:04:28.860 UTC [24806] ERROR:  role "codespace" does not exist
+2025-03-12 20:04:28.860 UTC [24806] STATEMENT:  alter role "codespace" with login;
+2025-03-12 20:05:26.178 UTC [25756] FATAL:  database "codespace" does not exist
+2025-03-12 20:06:56.162 UTC [26976] ERROR:  role "codespace" does not exist
+2025-03-12 20:06:56.162 UTC [26976] STATEMENT:  drop user codespace;
+2025-03-12 20:13:28.754 UTC [31029] FATAL:  role "codespace" does not exist
+2025-03-12 20:17:09.257 UTC [32950] FATAL:  role "codespace" does not exist
+2025-03-12 20:22:53.090 UTC [33061] ERROR:  syntax error at or near "20" at character 78
+2025-03-12 20:22:53.090 UTC [33061] STATEMENT:  insert into users (id, name, creation_date)
+	values (1, 'parneel', 03-12-2025 20:22:41 UTC);
+2025-03-12 20:28:14.193 UTC [39164] ERROR:  syntax error at or near "{" at character 26
+2025-03-12 20:28:14.193 UTC [39164] STATEMENT:  update users
+	set books = { 232 }
+	where id = 1;
+2025-03-12 20:28:25.847 UTC [39164] ERROR:  column "books" is of type text[] but expression is of type integer at character 26
+2025-03-12 20:28:25.847 UTC [39164] HINT:  You will need to rewrite or cast the expression.
+2025-03-12 20:28:25.847 UTC [39164] STATEMENT:  update users
+	set books = 232
+	where id = 1;
