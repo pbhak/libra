@@ -5,10 +5,7 @@ GEM
     pastel (0.8.0)
       tty-color (~> 0.5)
     pg (1.5.9)
-<<<<<<< HEAD
     pg (1.5.9-x64-mingw-ucrt)
-=======
->>>>>>> 2606c75c7bc42ff39276bea32352e3f16ba547ac
     tty-color (0.6.0)
     tty-cursor (0.7.1)
     tty-prompt (0.23.1)
@@ -19,6 +16,8 @@ GEM
       tty-screen (~> 0.8)
       wisper (~> 2.0)
     tty-screen (0.8.2)
+    tty-spinner (0.9.3)
+      tty-cursor (~> 0.7)
     wisper (2.0.1)
 
 PLATFORMS
@@ -27,12 +26,10 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-<<<<<<< HEAD
   dotenv (~> 3.1)
-=======
->>>>>>> 2606c75c7bc42ff39276bea32352e3f16ba547ac
   pg (~> 1.5)
   tty-prompt (~> 0.23.1)
+  tty-spinner (~> 0.9.3)
 
 BUNDLED WITH
    2.5.11

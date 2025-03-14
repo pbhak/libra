@@ -1,6 +1,7 @@
 require 'net/http'
 require 'json'
 require 'uri'
+require 'tty-spinner'
 
 module BookInfo
   # This is a bit odd, so I'll put a bit of an explanation of what it does here
@@ -22,8 +23,16 @@ module BookInfo
   end
 
   def book_info(isbn)
-    response = make_request(make_request("https://openlibrary.org/isbn/#{isbn}.json")['location'])
-
-    p JSON.parse(response.read_body)
+    spinner = TTY::Spinner.new(":spinner Loading book information...", format: :dots)
+    spinner.auto_spin
+    begin
+      response = make_request(make_request("https://openlibrary.org/isbn/#{isbn}.json")['location'])
+      spinner.stop('done!')
+    rescue => e
+      spinner.stop
+      puts "Error while processing URI - #{e.message}. Is your ISBN correct?"
+      return
+    end
+    JSON.parse(response.read_body)
   end
 end
