@@ -5,7 +5,10 @@ GEM
     pastel (0.8.0)
       tty-color (~> 0.5)
     pg (1.5.9)
+<<<<<<< HEAD
     pg (1.5.9-x64-mingw-ucrt)
+=======
+>>>>>>> 2606c75c7bc42ff39276bea32352e3f16ba547ac
     tty-color (0.6.0)
     tty-cursor (0.7.1)
     tty-prompt (0.23.1)
@@ -24,7 +27,10 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+<<<<<<< HEAD
   dotenv (~> 3.1)
+=======
+>>>>>>> 2606c75c7bc42ff39276bea32352e3f16ba547ac
   pg (~> 1.5)
   tty-prompt (~> 0.23.1)
 

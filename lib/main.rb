@@ -1,6 +1,7 @@
 require 'dotenv'
 require 'pg'
 require 'tty-prompt'
+require 'pg'
 
 print 'Establishing database connection.'
 
@@ -42,10 +43,6 @@ options = [
 selected_option = options.index(prompt.select('What would you like to do?', options))
 
 puts "Selected option #{selected_option}"
-
-# postgres database has been created
-# user/passwd is postgres
-# table name users
 
 all_arrays = []
 conn.exec("SELECT books FROM users").each do |books|
