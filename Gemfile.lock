@@ -1,8 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    dotenv (3.1.7)
     pastel (0.8.0)
       tty-color (~> 0.5)
+    pg (1.5.9)
+    pg (1.5.9-x64-mingw-ucrt)
     tty-color (0.6.0)
     tty-cursor (0.7.1)
     tty-prompt (0.23.1)
@@ -17,9 +20,12 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw-ucrt
   x86_64-linux
 
 DEPENDENCIES
+  dotenv (~> 3.1)
+  pg (~> 1.5)
   tty-prompt (~> 0.23.1)
 
 BUNDLED WITH
