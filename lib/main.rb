@@ -3,6 +3,10 @@ require 'pg'
 require 'tty-prompt'
 require 'pg'
 
+require_relative 'book_info'
+
+include BookInfo
+
 print 'Establishing database connection.'
 
 sleep 0.5
@@ -40,13 +44,26 @@ options = [
   'Renew'              # 4
 ]
 
-selected_option = options.index(prompt.select('What would you like to do?', options))
+selected_option = prompt.select('What would you like to do?', options)
 
-puts "Selected option #{selected_option}"
-
-all_arrays = []
-conn.exec("SELECT books FROM users").each do |books|
-  all_arrays << books['books']
+case selected_option
+when 'Book status'
+  # TODO implement book status
+when 'Book information'
+  # TODO add a spinner while the request is being made and add handling for invalid ISBNs/invalid requests
+  isbn = prompt.ask('ISBN:')
+  p book_info(isbn)
+when 'Check out'
+  # TODO implement check out
+when 'Check in'
+  # TODO implement check in
+when 'Renew'
+  # TODO implement renew
 end
 
-p all_arrays
+# all_arrays = []
+# conn.exec("SELECT books FROM users").each do |books|
+#   all_arrays << books['books']
+# end
+
+# p all_arrays

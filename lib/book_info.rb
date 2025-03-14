@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
 require 'uri'
 
-module Book
+module BookInfo
   # This is a bit odd, so I'll put a bit of an explanation of what it does here
   # The make_request function is self explanatory, it makes an HTTP request and returns a request object
   # However, the OpenLibrary /isbn/[isbn] endpoint does not return the data, it instead redirects
