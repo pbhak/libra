@@ -3,6 +3,9 @@ require 'json'
 require 'uri'
 require 'tty-spinner'
 
+# Module to fetch metadata of books from it's ISBN using the OpenLibrary ISBN API
+# The ISBN of a book can be obtained by either connecting a scanner to the computer and scanning
+# the book's barcode (this is what libraries do!) or by entering in the numbers below the barcode on a book
 module BookInfo
   # This is a bit odd, so I'll put a bit of an explanation of what it does here
   # The make_request function is self explanatory, it makes an HTTP request and returns a request object

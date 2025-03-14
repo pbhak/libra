@@ -4,8 +4,10 @@ require 'tty-prompt'
 require 'pg'
 
 require_relative 'book_info'
+require_relative 'users'
 
 include BookInfo
+include Users
 
 def ctrlc
   puts
@@ -44,11 +46,12 @@ prompt = TTY::Prompt.new
 
 # prompt for sign in?
 options = [
-  'Book status',       # 0
-  'Book information',  # 1
-  'Check out',         # 2
-  'Check in',          # 3
-  'Renew'              # 4
+  'Book status',     
+  'Book information',
+  'Check out',       
+  'Check in',        
+  'Renew',           
+  'Users'
 ]
 
 begin
@@ -60,7 +63,6 @@ begin
     when 'Book status'
       # TODO implement book status
     when 'Book information'
-      # TODO add a spinner while the request is being made and add handling for invalid ISBNs/invalid request
       isbn = prompt.ask('ISBN:')
       p book_info(isbn)
     when 'Check out'
@@ -69,6 +71,8 @@ begin
       # TODO implement check in
     when 'Renew'
       # TODO implement renew
+    when 'Users'
+      users_prompt(conn)
     end
 
     prompt.keypress('Press any key to continue...')
