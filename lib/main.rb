@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 require 'dotenv'
-require 'pg'
 require 'tty-prompt'
 require 'pg'
 
 require_relative 'book_info'
 require_relative 'users'
 
-include BookInfo
-include Users
+include BookInfo # rubocop:disable Style/MixinUsage
+include Users # rubocop:disable Style/MixinUsage
 
 def ctrlc
   puts
@@ -24,11 +25,11 @@ print 'Establishing database connection.'
 sleep 0.25
 print '.'
 
-begin 
+begin
   Dotenv.load('.env')
-  conn = PG.connect( dbname: ENV['dbname'], user: ENV['psql_username'], password: ENV['psql_password'] )
+  conn = PG.connect(dbname: ENV['dbname'], user: ENV['psql_username'], password: ENV['psql_password'])
   conn.type_map_for_results = PG::BasicTypeMapForResults.new(conn)
-rescue
+rescue # rubocop:disable Style/RescueStandardError
   puts "\nError connecting to database. Check your PostgreSQL credentials."
   exit
 end
@@ -46,11 +47,11 @@ prompt = TTY::Prompt.new
 
 # prompt for sign in?
 options = [
-  'Book status',     
+  'Book status',
   'Book information',
-  'Check out',       
-  'Check in',        
-  'Renew',           
+  'Check out',
+  'Check in',
+  'Renew',
   'Users'
 ]
 
@@ -61,15 +62,15 @@ begin
 
     case selected_option
     when 'Book status'
-      # TODO implement book status
+      # TODO: implement book status
     when 'Book information'
       book_info(prompt.ask('ISBN:'))
     when 'Check out'
-      # TODO implement check out
+      # TODO: implement check out
     when 'Check in'
-      # TODO implement check in
+      # TODO: implement check in
     when 'Renew'
-      # TODO implement renew
+      # TODO: implement renew
     when 'Users'
       users_prompt(conn)
     end
