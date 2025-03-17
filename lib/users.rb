@@ -11,19 +11,29 @@ module Users
       'Get all users',
       'Get user information',
       'Create user',
-      'Update user',
+      'Update username',
       'Delete user'
     ]
     case prompt.select('Users', options)
     when 'Get all users'
       get_all_users_as_hash(conn)
     when 'Get user information'
+      user_information = user_info(conn, prompt.ask('ID of user:').to_i)
+      unless user_information
+        puts 'Error fetching user information'
+      end
     when 'Create user'
       user = create_user(conn, prompt.ask('Name:'))
       puts "Created user #{user['name']} with ID #{user['id']}"
-    when 'Update user'
+    when 'Update username'
+      id = prompt.ask('ID of user to update:').to_i
+      if user_exists?(conn, id)
+        update_username(conn, id, prompt.ask('New username:'))
+      else
+        puts 'User not found'
+      end
     when 'Delete user'
-      if delete_user(conn, prompt.ask('ID of user to delete:'))
+      if delete_user(conn, prompt.ask('ID of user to delete:').to_i)
         puts 'User deleted successfully'
       else
         puts 'Error deleting user'
@@ -52,5 +62,29 @@ module Users
   def delete_user(conn, id)
     # Given a connection object and a user ID, attempt to delete the user with that ID.
     # Returns the ID of the deleted user if succesful, and false if otherwise (e.g. the user does not exist)
+    return false unless user_exists?(conn, id)
+    return id if conn.exec("DELETE FROM users WHERE id = #{id}").class == PG::Result
+
+    false
+  end
+
+  def user_info(conn, id)
+    return false unless user_exists?(conn, id)
+
+    res = conn.exec("SELECT * FROM users WHERE id = #{id}")[0]
+    table = TTY::Table.new(['ID', 'Name', 'Creation Date', '# Books'], [])
+
+    table << [res['id'], res['name'], res['creation_date'].strftime("%m/%e/%y %r UTC%-:::z"), res['books'].length]
+
+    puts table.render(:unicode)
+  end
+
+  def user_exists?(conn, id)
+    !conn.exec("SELECT COUNT(1) FROM users WHERE id = #{id}")[0]['count'].zero?
+  end
+
+  def update_username(conn, id, name)
+    conn.exec("UPDATE users SET name = '#{name}' WHERE id = #{id}")
+    puts 'User updated'
   end
 end
