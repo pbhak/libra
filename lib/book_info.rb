@@ -2,6 +2,7 @@ require 'net/http'
 require 'json'
 require 'uri'
 require 'tty-spinner'
+require 'tty-table'
 
 # Module to fetch metadata of books from it's ISBN using the OpenLibrary ISBN API
 # The ISBN of a book can be obtained by either connecting a scanner to the computer and scanning
@@ -49,15 +50,18 @@ module BookInfo
   end
 
   def parse_book_info(json)
+    table = TTY::Table.new
     JSON.parse(json).each do |k, v|
       next unless ALLOWED_PROPERTIES.include?(k)
       k = k.capitalize
             .sub('_', ' ')
             .sub('Isbn ', 'ISBN-')
             .sub('Physical format', 'Format')
+            .sub('Publish date', 'Published')
       v = v[0] if v.is_a?(Array)
       v = JSON.parse(make_request("https://openlibrary.org#{v['key']}.json").read_body)['name'] if k == 'Authors'
-      puts "#{k}: #{v}" 
+      table << [k, v]
     end
+    puts table.render(:unicode)
   end
 end
