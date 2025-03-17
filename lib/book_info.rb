@@ -7,6 +7,15 @@ require 'tty-spinner'
 # The ISBN of a book can be obtained by either connecting a scanner to the computer and scanning
 # the book's barcode (this is what libraries do!) or by entering in the numbers below the barcode on a book
 module BookInfo
+  ALLOWED_PROPERTIES = [
+    'title',
+    'isbn_13',
+    'isbn_10',
+    'physical_format',
+    'publish_date',
+    'authors'
+  ]  
+
   # This is a bit odd, so I'll put a bit of an explanation of what it does here
   # The make_request function is self explanatory, it makes an HTTP request and returns a request object
   # However, the OpenLibrary /isbn/[isbn] endpoint does not return the data, it instead redirects
@@ -14,7 +23,7 @@ module BookInfo
   # Because of this, you need to first make a request to /isbn/[isbn], then make another request
   # to the given URL to redirect
   # The data is then parsed from JSON into a Ruby Hash object and subsequently returned
-  # If you somehow got here and are reading this, send me a message because you're a real one :)
+  # If you somehow got here and are reading this, send me a message or email because you're a real one :)
 
   def make_request(url)
     url = URI(url)
@@ -36,6 +45,19 @@ module BookInfo
       puts "Error while processing URI - #{e.message}. Is your ISBN correct?"
       return
     end
-    JSON.parse(response.read_body)
+    parse_book_info(response.read_body)
+  end
+
+  def parse_book_info(json)
+    JSON.parse(json).each do |k, v|
+      next unless ALLOWED_PROPERTIES.include?(k)
+      k = k.capitalize
+            .sub('_', ' ')
+            .sub('Isbn ', 'ISBN-')
+            .sub('Physical format', 'Format')
+      v = v[0] if v.is_a?(Array)
+      v = JSON.parse(make_request("https://openlibrary.org#{v['key']}.json").read_body)['name'] if k == 'Authors'
+      puts "#{k}: #{v}" 
+    end
   end
 end

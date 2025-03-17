@@ -63,8 +63,7 @@ begin
     when 'Book status'
       # TODO implement book status
     when 'Book information'
-      isbn = prompt.ask('ISBN:')
-      p book_info(isbn)
+      book_info(prompt.ask('ISBN:'))
     when 'Check out'
       # TODO implement check out
     when 'Check in'
