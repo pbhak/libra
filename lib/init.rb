@@ -32,3 +32,14 @@ begin
 rescue PG::DuplicateTable
   puts 'Table users already exists'
 end
+
+begin
+  conn.exec("CREATE TABLE books (
+              isbn INTEGER PRIMARY KEY,
+              checked_out_to INTEGER,
+              checked_out_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+              due_on TIMESTAMP WITH TIME ZONE,
+              remaining_renews INTEGER DEFAULT 3)")
+rescue PG::DuplicateTable
+  puts 'Table books already exists'
+end
