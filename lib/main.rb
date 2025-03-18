@@ -4,9 +4,11 @@ require 'dotenv'
 require 'tty-prompt'
 require 'pg'
 
+require_relative 'book_handling'
 require_relative 'book_info'
 require_relative 'users'
 
+include BookHandling # rubocop:disable Style/MixinUsage
 include BookInfo # rubocop:disable Style/MixinUsage
 include Users # rubocop:disable Style/MixinUsage
 
@@ -47,6 +49,7 @@ prompt = TTY::Prompt.new
 
 # prompt for sign in?
 options = [
+  'Add book',
   'Book status',
   'Book information',
   'Check out',
@@ -61,12 +64,14 @@ begin
     selected_option = prompt.select('What would you like to do?', options)
 
     case selected_option
+    when 'Add book'
+      add_book(prompt.ask('Book ISBN:'), conn)
     when 'Book status'
       # TODO: implement book status
     when 'Book information'
       book_info(prompt.ask('ISBN:'))
     when 'Check out'
-      # TODO: implement check out
+      check_book_out(prompt.ask('User ID:'), prompt.ask('Book ISBN:'), conn)
     when 'Check in'
       # TODO: implement check in
     when 'Renew'

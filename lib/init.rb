@@ -5,7 +5,9 @@ require 'pg'
 
 print 'Establishing database connection.'
 
-sleep 0.5
+SLEEP_TIME = 0.25
+
+sleep SLEEP_TIME
 print '.'
 
 begin
@@ -18,7 +20,7 @@ rescue # rubocop:disable Style/RescueStandardError
 end
 
 2.times do
-  sleep 0.5
+  sleep SLEEP_TIME
   print '.'
 end
 puts "\n"
@@ -35,7 +37,7 @@ end
 
 begin
   conn.exec("CREATE TABLE books (
-              isbn INTEGER PRIMARY KEY,
+              isbn BIGINT PRIMARY KEY,
               checked_out_to INTEGER,
               checked_out_on TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
               due_on TIMESTAMP WITH TIME ZONE,
