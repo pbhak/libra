@@ -10,9 +10,9 @@ Plus, since this is already a Ruby project, I can probably expand with Rails som
 1. Make sure your PostgreSQL server is running
 2. Make a .env file in the root of the project with the following properties:
 ```
-dbname - your Postgres database name
-psql_username - your Postgres username (naming it username will conflict with environment variables on Windows systems)
-psql_password - your Postgres password
+dbname = [your PostgreSQL database name]
+psql_username = [your PostgreSQL username]
+psql_password = [your PostgreSQL password]
 ```
 3. Run `lib/init.rb` to create needed tables
 4. Use Libra through `lib/main.rb`
