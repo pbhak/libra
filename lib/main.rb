@@ -67,7 +67,7 @@ begin
     when 'Add book'
       add_book(prompt.ask('Book ISBN:'), conn)
     when 'Book status'
-      # TODO: implement book status
+      book_status(prompt.ask('Book ISBN:'), conn)
     when 'Book information'
       book_info(prompt.ask('ISBN:'))
     when 'Check out'
