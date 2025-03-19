@@ -23,7 +23,7 @@ module BookHandling
     puts "Book #{isbn} added"
   end
 
-  def check_book_out(user_id, isbn, conn)
+  def check_book_out(user_id, isbn, conn) # rubocop:disable Metrics/MethodLength
     # Check a book out to a user given the user's ID, the book ISBN, and a Postgres connection object
     # Note: queries here will be using upserts (update row instead of insert if it already exists)
     # TODO: reimplement this in coordination with add_book
@@ -37,7 +37,9 @@ module BookHandling
                 VALUES (#{isbn}, #{user_id}, '#{now}', '#{three_weeks_from_now}, 3')
                 ON CONFLICT (isbn)
                 DO UPDATE SET isbn = EXCLUDED.isbn, checked_out_to = EXCLUDED.checked_out_to, due_on = EXCLUDED.due_on")
-      # TODO change books in users schema from integer[] to integer representing number of books instead of book ISBNs
+      conn.exec("UPDATE users
+                 SET books = books + 1
+                 WHERE id = #{user_id}")
     rescue # rubocop:disable Style/RescueStandardError
       puts 'Error inserting row'
       return false

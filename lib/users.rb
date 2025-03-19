@@ -60,7 +60,7 @@ module Users
     all_fields = [res.field_values('id'), res.field_values('name'), res.field_values('creation_date'), res.field_values('books')] # rubocop:disable Layout/LineLength
 
     all_fields[0].length.times do |index|
-      table << [all_fields[0][index], all_fields[1][index], all_fields[2][index].strftime('%m/%e/%y %r UTC%-:::z'), all_fields[3][index].length] # rubocop:disable Layout/LineLength
+      table << [all_fields[0][index], all_fields[1][index], all_fields[2][index].strftime('%m/%e/%y %r UTC%-:::z'), all_fields[3][index]] # rubocop:disable Layout/LineLength
     end
 
     puts table.render(:unicode)
@@ -81,7 +81,7 @@ module Users
     res = conn.exec("SELECT * FROM users WHERE id = #{id}")[0]
     table = TTY::Table.new(['ID', 'Name', 'Creation Date', '# Books'], [])
 
-    table << [res['id'], res['name'], res['creation_date'].strftime('%m/%e/%y %r UTC%-:::z'), res['books'].length]
+    table << [res['id'], res['name'], res['creation_date'].strftime('%m/%e/%y %r UTC%-:::z'), res['books']]
 
     puts table.render(:unicode)
   end

@@ -30,7 +30,7 @@ begin
               id INTEGER PRIMARY KEY,
               name TEXT NOT NULL,
               creation_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-              books INTEGER[] DEFAULT ARRAY[]::INTEGER[])")
+              books INTEGER DEFAULT 0)")
 rescue PG::DuplicateTable
   puts 'Table users already exists'
 end
