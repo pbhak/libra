@@ -34,7 +34,7 @@ module BookHandling
 
     begin
       conn.exec("INSERT INTO books (isbn, checked_out_to, checked_out_on, due_on, remaining_renews)
-                VALUES (#{isbn}, #{user_id}, '#{now}', '#{three_weeks_from_now}, 3')
+                VALUES (#{isbn}, #{user_id}, '#{now}', '#{three_weeks_from_now}', 3)
                 ON CONFLICT (isbn)
                 DO UPDATE SET isbn = EXCLUDED.isbn, checked_out_to = EXCLUDED.checked_out_to, due_on = EXCLUDED.due_on")
       conn.exec("UPDATE users
